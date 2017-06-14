@@ -23,13 +23,14 @@ The endpoint returns the following information:
 
 ## Example creation usage:
 
-    ```https://bexis-url-shortener.herokuapp.com/new/https://www.google.com ```
+```https://bexis-url-shortener.herokuapp.com/new/https://www.google.com ```
 or 
-    ```https://bexis-url-shortener.herokuapp.com/new/https://www.cs.princeton.edu/~rs/AlgsDS07/  ```
+
+```https://bexis-url-shortener.herokuapp.com/new/https://www.cs.princeton.edu/~rs/AlgsDS07/  ```
     
 ## Example creation output:
  
-    ```{ "original_url": "https://www.cs.princeton.edu/~rs/AlgsDS07/", "short_url": "https://bexis-url-shortener.herokuapp.com/4376" } ```
+```{ "original_url": "https://www.cs.princeton.edu/~rs/AlgsDS07/", "short_url": "https://bexis-url-shortener.herokuapp.com/4376" } ```
     
 ## Usage:
 
