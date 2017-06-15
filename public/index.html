@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css" type="text/css" />
+       <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Url Shortener Microservice</h1><br>
+            
+            <p>This website is for the Free Code Camp Back End API
+            <a href="https://www.freecodecamp.com/challenges/url-shortener-microservice" >
+                Url Shortener Microservice project
+            </a>. It exposes an enpoint at
+            <a href="https://bexis-url-shortener.herokuapp.com/api/new/">
+                <code> /api/new/:myUrl</code> </a>
+            which returns the original url you entered and the shortened url, all in a JSON format.</p><br>
+            <p>When the shortened url is visited, it redirects to the original url</p>
+            
+            <p>By <a href="#"> Abose Ukhun  </a> |
+                <a href="https://github.com/bexis13/url-shortener">
+                 Project Github</a>
+            </p>
+            <blockquote>User stories:
+                <ol>
+                    <li>
+                         can pass a URL as a parameter and I will receive a
+                         shortened URL in the JSON response.
+                    </li>
+                    <li>
+                       If I pass an invalid URL that doesn't follow the valid 
+                       http://www.example.com format, the JSON response will
+                       contain an error instead. 
+                    </li>
+                    <li>
+                       When I visit that shortened URL, it will redirect me to
+                       my original link.  
+                    </li>
+                </ol>
+            </blockquote>
+            <h3>Example creation Usage:</h3>
+                <code>https://bexis-url-shortener.herokuapp.com/new/https://www.google.com</code><br> or <br>
+                <code>https://bexis-url-shortener.herokuapp.com/new/https://www.cs.princeton.edu/~rs/AlgsDS07/</code><br>
+            <h3>Example creation output:</h3>
+                 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                    <li id="tab1" class="active"><a href="#">Raw</a></li>
+                 </ul>
+                <pre>
+{        
+        "original_url": "https://www.cs.princeton.edu/~rs/AlgsDS07/", 
+        
+        "short_url": "https://bexis-url-shortener.herokuapp.com/4376" 
+}
+               </pre><br>
+            <h3>Usage:</h3>
+               <code>https://bexis-url-shortener.herokuapp.com/4376</code> 
+            <h3>Will redirect to:</h3>
+                <code>https://www.cs.princeton.edu/~rs/AlgsDS07/</code>
+        </div>
+    </body>
+</html>

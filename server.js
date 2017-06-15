@@ -6,8 +6,9 @@ var port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/api/new", function(request, response){
+app.get("/api/new/:id", function(request, response){
     
+    response.send(request.params.id);
     
 })
 
