@@ -9,6 +9,15 @@ var port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//connect to the database
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/urlShortener");
+
+var connection = mongoose.connection;
+connection.on('error', console.error.bind(console, 'connection error:'))
+connection.on('open', function(){
+    console.log("connected correctly to the database");
+})
+
 app.get("/new/:id(*)", function(request, response){
     
     var originalUrl = request.params.id;
