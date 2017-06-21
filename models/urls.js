@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 
 //create our url schema
 var urlModelSchema = new Schema({
-    name : {type: String}
+    originalUrl : {type: String},
+    shortenedUrl : {type: String}
 },
 {
     timestamps : true

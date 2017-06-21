@@ -2,26 +2,54 @@ var express = require("express");
 var app = express();
 var path = require("path");
 var mongoose = require("mongoose");
-var urls = require("models/urls");
+var urlPairModel = require("./models/urls");
+var validator = require("validator");
 
 var port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/new/:id", function(request, response){
+app.get("/new/:id(*)", function(request, response){
     
     var originalUrl = request.params.id;
-    var urlInstance = new urlModels({name : originalUrl});
     
-    urlInstance.save(function(err,data){
-        
-        if(err){
-            throw err;
-        }
-        else{
-           console.log(data); 
-        }
-    })
+    
+    //check if it's a valid url
+    if(!validator.isURL(originalUrl)){
+        response.send({error: "you can enter only valid urls"})
+    }
+    //create a shortened url representation
+    var shortCode = Math.floor(Math.random()*10000);
+    //create new urlpair from url model
+    var urlInstance = new urlPairModel({
+        originalUrl : originalUrl,
+        shortenedUrl : shortCode
+    });
+    console.log(urlInstance);
+    
+    //return back original url and shortened form
+    response.send({
+        originalUrl : originalUrl,
+        shortenedUrl : shortCode
+    });
+    // //store both shortened and original url
+    // var dbUrl = "mongodb://localhost:27017/urlShortener";
+    // mongoose.connect(dbUrl);
+    // var db = mongoose.connection;
+    
+    // db.on('error', console.error.bind(console , "connection error:"));
+    // db.once('open', function(){
+    //     urlPairModel.save(function(err,data){
+    //         if(err){
+    //             throw err;
+    //         }
+    //         else{
+    //         db.close(); 
+    //         response.send("saved in the database");
+    //         }
+    //     })
+    // })
+   
     
 });
 
