@@ -10,7 +10,7 @@ var port = process.env.PORT || 8080;
 app.use(express.static(path.join(__dirname, 'public')));
 
 //connect to the database
-var mlabUrl = process.env.MONGOLAB_URI + "url-shortener"; //get mlab url(credentials) from environment variables
+var mlabUrl = process.env.MONGOLAB_URI; //get mlab url(credentials) from environment variables
 mongoose.Promise = global.Promise;
 mongoose.connect( mlabUrl || "mongodb://localhost/urlShortener"); /*connect to mongodb with mongoose
 either on mlab cloud remote database or locally installed mongodb*/
