@@ -45,6 +45,7 @@ app.get("/new/:id(*)", function(request, response){
         }
         else{
             //return back to the user only the original url and shortened form
+            console.log(data);
             var appUrl = 'https://bexis-url-shortener.herokuapp.com/';
             response.send({
             originalUrl : originalUrl,
@@ -52,37 +53,31 @@ app.get("/new/:id(*)", function(request, response){
             });
         }
     })
-   
-    
 });
 
 app.get("/:id", function(request, response){
     //get users shortcode
     var shortCode = request.params.id;
     //find document with this shortcode in the database collection urlpairmodel
-    try{
-        urlPairModel.findOne({'shortenedUrl':shortCode}, function(err, doc){
-            if(err){
-                throw err;
+    urlPairModel.findOne({'shortenedUrl':shortCode}, function(err, docs){
+        if(err){
+            response.send("cannot find your shortUrl in database. Please add it" +
+        " as new url /new/your_url_here");
+        }
+        else{
+            console.log(docs);
+            //check if docs original url does not have http in it
+            var check = docs.originalUrl.substring(0,4);
+            //add http if it does not have
+            if(check !== "http"){
+                var urlToVisit = "http://" + docs.originalUrl;
+                response.redirect(urlToVisit);
             }
-            else{
-                //check if docs original url does not have http in it
-                var check = doc.originalUrl.substring(0,4);
-                //add http if it does not have
-                if(check !== "http"){
-                    var urlToVisit = "http://" + doc.originalUrl;
-                    response.redirect(urlToVisit);
-                }
-                //it has http, so:
-                //redirect user to appropriate url representation of the shortcode
-                response.redirect(doc.originalUrl);
-            }
-        })
-    }
-    catch(err){
-         response.send("cannot find your shortUrl in database. Please add it" +
-            " as new url /new/your_url_here");
-    }
+            //it has http, so:
+            //redirect user to appropriate url representation of the shortcode
+            response.redirect(docs.originalUrl);
+        }
+    })
 })
 
 app.listen(port, function(){
