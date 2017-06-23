@@ -5,20 +5,21 @@ var mongoose = require("mongoose");
 var urlPairModel = require("./models/urls");
 var validator = require("validator");
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 //connect to the database
 var mlabUrl = process.env.MONGOLAB_URI; //get mlab url(credentials) from environment variables and url-shortner is dbname
 mongoose.Promise = global.Promise;
-mongoose.connect(mlabUrl || "mongodb://localhost:27017/urlShortener"); /*connect to mongodb(on mlab, no locally) with mongoose
+mongoose.connect("mongodb://localhost:27017/urlShortener"); /*connect to mongodb(on mlab, no locally) with mongoose
 either on mlab cloud remote database or locally installed mongodb*/
 
 var connection = mongoose.connection;
 connection.on('error', console.error.bind(console, 'connection error:'))
 connection.on('open', function(){
     console.log("connected correctly to the database");
+    console.log( process.env.PORT);
 })
 
 app.get("/new/:id(*)", function(request, response){
@@ -43,7 +44,7 @@ app.get("/new/:id(*)", function(request, response){
             console.log(err);
             response.send("Error saving to the database");
         }
-        else{
+        if(data){
             //return back to the user only the original url and shortened form
             console.log(data);
             var appUrl = 'https://bexis-url-shortener.herokuapp.com/';
@@ -64,10 +65,10 @@ app.get("/:id", function(request, response){
             response.send("cannot find your shortUrl in database. Please add it" +
         " as new url /new/your_url_here");
         }
-        else{
-            console.log(docs);
+        if(docs){
+            console.log(docs.originalUrl);
             //check if docs original url does not have http in it
-            var check = docs.originalUrl.substring(0,4);
+            var check = docs["originalUrl"].substring(0,4);
             //add http if it does not have
             if(check !== "http"){
                 var urlToVisit = "http://" + docs.originalUrl;
