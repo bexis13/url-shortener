@@ -77,6 +77,10 @@ app.get("/:id", function(request, response){
             //redirect user to appropriate url representation of the shortcode
             response.redirect(docs.originalUrl);
         }
+        else if(!docs){
+            response.send({error: "cannot find your shortened url in database."
+                + " Please create it as a new one"})
+        }
     })
 })
 
